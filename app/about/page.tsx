@@ -1,6 +1,12 @@
 import HeaderSection from "@/components/HeaderSection"
 import Image from "next/image"
 import { IoEyeOutline, IoLocateOutline } from "react-icons/io5"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "About Us - Hotel Murah Berkualitas",
+    description: "Pelajari lebih lanjut tentang hotel murah berkualitas kami, visi, dan misi kami untuk memberikan pengalaman terbaik bagi tamu kami.",
+}
 
 const AboutPage = () => {
     return (
