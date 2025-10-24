@@ -12,10 +12,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     jwt({token, user}){
-      if(user) token.role = user.role
+      if(user) token.role = user.role // ngasih tau kalau token.role itu dari user.role
       return token;
     },
-    session({session, token}){
+    session({session, token}){ // ini jatuhnya client
       session.user.id = token.sub
       session.user.role = token.role
       return session;
