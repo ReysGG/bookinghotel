@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import '@/app/globals.css'
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/navbar/footbar";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 
 const geistSans = Geist({
@@ -20,18 +22,22 @@ export const metadata: Metadata = {
   description: "Aplikasi Sigma",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await auth() // Server-side: ambil session dari server
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}> 
-        <Navbar></Navbar>
-        <main className="bg-gray-50 min-h-screen">{children}</main>
-        <Footer></Footer>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SessionProvider>
+          <Navbar /> {/* ✅ Bisa pakai useSession() */}
+          <main>{children}</main> {/* ✅ Bisa pakai useSession() */}
+          <Footer /> {/* ✅ Bisa pakai useSession() */}
+        </SessionProvider>
       </body>
     </html>
   );
