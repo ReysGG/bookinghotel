@@ -37,6 +37,7 @@ export const ContactMessage = async (prevState: unknown, formData: FormData) => 
 }
 
 export const saveRoom = async (image: string, prevState: unknown, formData: FormData) => {
+    
     if (!image) return { message: "image is Required" }
 
     const rawData = {
@@ -48,9 +49,11 @@ export const saveRoom = async (image: string, prevState: unknown, formData: Form
     };
 
     const ValidateFields = RoomSchema.safeParse(rawData)
+    
     if (!ValidateFields.success) return { error: ValidateFields.error.flatten().fieldErrors }
 
     const { name, description, capacity, price, amenities } = ValidateFields.data
+    
 
     try {
         await prisma.room.create({
@@ -70,7 +73,7 @@ export const saveRoom = async (image: string, prevState: unknown, formData: Form
             }
         })
 
-        redirect('/admin/room');
+        redirect("/admin/room/");
     } catch (error) {
         console.log(error)
     }
