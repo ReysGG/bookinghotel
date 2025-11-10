@@ -66,7 +66,7 @@ const CreateForm = ({ amenities }: { amenities: Amenities[] }) => {
                         </div>
                     </div>
                     <div className="mb-4">
-                        <textarea name="deskripsi" rows={8} className="py-2 px-4 rounded-sm border border-gray-400 w-full" placeholder="Deksripsi"></textarea>
+                        <textarea name="description" rows={8} className="py-2 px-4 rounded-sm border border-gray-400 w-full" placeholder="Deksripsi"></textarea>
                         <div aria-live="polite" aria-atomic="true">
                             <span className="text-sm text-red-500 mt-2">{Output?.error?.description}</span>
                         </div>
