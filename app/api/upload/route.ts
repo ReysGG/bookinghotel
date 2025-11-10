@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export const PUT = async (request: Request) => {
     const form = await request.formData()
-    const file = form.get('file') as File
+    const file = form.get('file') as File //ngambil nama "file" dari kiriman
 
     if(file.size == 0 || file.size == undefined){
         return NextResponse.json({message: "Field dibutuhkan"}, {status: 400})
