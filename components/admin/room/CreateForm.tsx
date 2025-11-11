@@ -53,6 +53,11 @@ const CreateForm = ({ amenities }: { amenities: Amenities[] }) => {
         })
     }
 
+    //bind menciptakan function baru.
+    //jadi save room karna digitukan bind, jadinya useactionstate menghasilkan value (image, Saveroom. bind)
+    // useActionState (Fungsi, Nilai awal)
+    
+
     const [Output, FormAction, process] = useActionState(saveRoom.bind(null, image), null)
 
     return <>
@@ -115,9 +120,15 @@ const CreateForm = ({ amenities }: { amenities: Amenities[] }) => {
                                 id="input-file"
                                 className="hidden"
                                 ref={InputFileRef}
-                                onChange={HandleUploadImage} />) : (
-                            <Image src={image} alt="image" width={640} height={360} className="rounded-md absolute aspect-video object-cover"></Image>
-                        )
+                                onChange={HandleUploadImage} />)
+                            :
+                            (<Image
+                                src={image}
+                                alt="image"
+                                width={640}
+                                height={360}
+                                className="rounded-md absolute aspect-video object-cover"></Image>
+                            )
                         }
 
                     </label>

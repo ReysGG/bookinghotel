@@ -36,7 +36,7 @@ export const ContactMessage = async (prevState: unknown, formData: FormData) => 
     }
 }
 
-export const saveRoom = async (image: string, prevState: unknown, formData: FormData) => {
+export const saveRoom = async (image: string, NilaiAwal: unknown, formData: FormData) => {
     
     if (!image) return { message: "image is Required" }
 
@@ -72,10 +72,11 @@ export const saveRoom = async (image: string, prevState: unknown, formData: Form
                 }
             }
         })
-
-        redirect("/admin/room/");
+        
     } catch (error) {
         console.log(error)
     }
+
+    redirect("/admin/room/");
 
 } 
