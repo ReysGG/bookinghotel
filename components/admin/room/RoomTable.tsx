@@ -2,6 +2,7 @@ import Skeleton from "@/components/CardSkeleton"
 import { getRoom } from "@/lib/data"
 import { FormatCurrency, FormatDate } from "@/lib/utils"
 import Image from "next/image"
+import { Deletebutton, Editbutton } from "./button"
 
 export function Loading() {
     return (
@@ -92,7 +93,12 @@ const RoomTable = async () => {
                             <td className="px-6 py-4">{item.name}</td>
                             <td className="px-6 py-4">{FormatCurrency(item.price)}</td>
                             <td className="px-6 py-4">{FormatDate(item.createdAt.toString())}</td>
-                            <td className="px-6 py-4 text-right"></td>
+                            <td className="px-6 py-4 text-right">
+                                <div className="flex items-center justify-center gap-1">
+                                    <Editbutton id={item.id}></Editbutton>
+                                    <Deletebutton id={item.id} imageURL={item.image}></Deletebutton>
+                                </div>
+                            </td>
                         </tr>
                     ))}
 
