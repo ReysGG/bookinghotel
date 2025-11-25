@@ -120,7 +120,7 @@ export const updateRoom = async (image: string, roomID : string, NilaiAwal: unkn
     
 
     try {
-        await prisma.$transaction([
+        await prisma.$transaction([ //di bungkus agar misalnya ini gagal, dibatalkan semua
             prisma.room.update({
                 where: {id: roomID},
                 data: {
