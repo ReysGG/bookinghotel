@@ -147,3 +147,23 @@ export const updateRoom = async (image: string, roomID : string, NilaiAwal: unkn
     revalidatePath("/admin/room/")
     redirect("/admin/room/");
 } 
+
+export const getRoomDetails = async (roomID: string) => {
+    try {
+        const result = await prisma.room.findUnique({
+            where: {id: roomID},
+            include: {
+                RoomAmenities: {
+                    include: {
+                        Amenities: {
+                            select: {name: true}
+                        }
+                    }
+                }
+            }
+        })
+        return result
+    } catch (error) {
+        
+    }
+}
