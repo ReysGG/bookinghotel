@@ -1,11 +1,13 @@
 "use server"
 
 import { error, log } from "console"
-import { ContactFormSchema, RoomSchema } from "./zod"
+import { ContactFormSchema, ReserveSchema, RoomSchema } from "./zod"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import { del } from "@vercel/blob"
 import { revalidatePath } from "next/cache"
+import { auth } from "@/auth"
+import { differenceInCalendarDays, differenceInDays } from "date-fns"
 
 //aksi yang di jalankan di server
 
@@ -98,6 +100,8 @@ export const deleteRoom = async (id: string, imageURL: string) => {
     revalidatePath("/admin/room/")
 }
 
+
+
 // update room
 
 export const updateRoom = async (image: string, roomID : string, NilaiAwal: unknown, formData: FormData) => {
@@ -167,3 +171,22 @@ export const getRoomDetails = async (roomID: string) => {
         
     }
 }
+
+export const createReserve = async (roomID : string, price: number, startDate: Date, endDate: Date, prevstate: unknown, formData: FormData) => {
+    const sessions = await auth()
+    if(!sessions?.user || !sessions.user.id || !sessions.user.role) return redirect(`/signin?redirect_url=room/${roomID}`)
+    
+    const rawData = {
+        name: formData.get('name'),
+        phone: formData.get('phone')
+    }
+
+    const validatefields = ReserveSchema.safeParse(rawData)
+    if(!validatefields.success) return {error: validatefields.error.flatten().fieldErrors}
+
+    const {name, phone} = validatefields.data
+    const night = differenceInCalendarDays(endDate, startDate)
+    if (night <=0) return {messageDate: "Date must at least 1 night"}
+    const total = night * price
+
+} 
