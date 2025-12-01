@@ -216,12 +216,10 @@ export const createReserve = async (roomID: string, price: number, startDate: Da
                 }
             })
             reservationid = reservation.id
-            redirect(`/checkout/${reservationid}`)
-
         })
     } catch (error) {
         console.error(error)
     }
-    
+    redirect(`/checkout/${reservationid}`)
 
 } 
