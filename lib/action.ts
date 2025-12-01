@@ -45,7 +45,7 @@ export const ContactMessage = async (prevState: unknown, formData: FormData) => 
 // Menyimpan data kedalam database
 
 export const saveRoom = async (image: string, NilaiAwal: unknown, formData: FormData) => {
-    
+
     if (!image) return { message: "image is Required" }
 
     const rawData = {
@@ -57,11 +57,11 @@ export const saveRoom = async (image: string, NilaiAwal: unknown, formData: Form
     };
 
     const ValidateFields = RoomSchema.safeParse(rawData)
-    
+
     if (!ValidateFields.success) return { error: ValidateFields.error.flatten().fieldErrors }
 
     const { name, description, capacity, price, amenities } = ValidateFields.data
-    
+
 
     try {
         await prisma.room.create({
@@ -80,19 +80,19 @@ export const saveRoom = async (image: string, NilaiAwal: unknown, formData: Form
                 }
             }
         })
-        
+
     } catch (error) {
         console.log(error)
     }
 
     redirect("/admin/room/");
-} 
+}
 
 export const deleteRoom = async (id: string, imageURL: string) => {
     try {
         await del(imageURL)
         await prisma.room.delete({
-            where: {id}
+            where: { id }
         })
     } catch (error) {
         console.log(error)
@@ -104,8 +104,8 @@ export const deleteRoom = async (id: string, imageURL: string) => {
 
 // update room
 
-export const updateRoom = async (image: string, roomID : string, NilaiAwal: unknown, formData: FormData) => {
-    
+export const updateRoom = async (image: string, roomID: string, NilaiAwal: unknown, formData: FormData) => {
+
     if (!image) return { message: "image is Required" }
 
     const rawData = {
@@ -117,16 +117,16 @@ export const updateRoom = async (image: string, roomID : string, NilaiAwal: unkn
     };
 
     const ValidateFields = RoomSchema.safeParse(rawData)
-    
+
     if (!ValidateFields.success) return { error: ValidateFields.error.flatten().fieldErrors }
 
     const { name, description, capacity, price, amenities } = ValidateFields.data
-    
+
 
     try {
         await prisma.$transaction([ //di bungkus agar misalnya ini gagal, dibatalkan semua
             prisma.room.update({
-                where: {id: roomID},
+                where: { id: roomID },
                 data: {
                     name,
                     description,
@@ -150,17 +150,17 @@ export const updateRoom = async (image: string, roomID : string, NilaiAwal: unkn
     }
     revalidatePath("/admin/room/")
     redirect("/admin/room/");
-} 
+}
 
 export const getRoomDetails = async (roomID: string) => {
     try {
         const result = await prisma.room.findUnique({
-            where: {id: roomID},
+            where: { id: roomID },
             include: {
                 RoomAmenities: {
                     include: {
                         Amenities: {
-                            select: {name: true}
+                            select: { name: true }
                         }
                     }
                 }
@@ -168,25 +168,60 @@ export const getRoomDetails = async (roomID: string) => {
         })
         return result
     } catch (error) {
-        
+
     }
 }
 
-export const createReserve = async (roomID : string, price: number, startDate: Date, endDate: Date, prevstate: unknown, formData: FormData) => {
+export const createReserve = async (roomID: string, price: number, startDate: Date, endDate: Date, prevstate: unknown, formData: FormData) => {
     const sessions = await auth()
-    if(!sessions?.user || !sessions.user.id || !sessions.user.role) return redirect(`/signin?redirect_url=room/${roomID}`)
-    
+    if (!sessions?.user || !sessions.user.id || !sessions.user.role) return redirect(`/signin?redirect_url=room/${roomID}`)
+
     const rawData = {
         name: formData.get('name'),
         phone: formData.get('phone')
     }
 
     const validatefields = ReserveSchema.safeParse(rawData)
-    if(!validatefields.success) return {error: validatefields.error.flatten().fieldErrors}
+    if (!validatefields.success) return { error: validatefields.error.flatten().fieldErrors }
 
-    const {name, phone} = validatefields.data
+    const { name, phone } = validatefields.data
     const night = differenceInCalendarDays(endDate, startDate)
-    if (night <=0) return {messageDate: "Date must at least 1 night"}
+    if (night <= 0) return { messageDate: "Date must at least 1 night" }
     const total = night * price
+
+    let reservationid
+
+    try {
+        await prisma.$transaction(async (tx) => {
+            await tx.user.update({
+                data: {
+                    name,
+                    phone,
+                },
+                where: {id: sessions.user.id}
+            })
+            const reservation = await tx.reservation.create({
+                data:{
+                    startDate: startDate,
+                    endDate: endDate,
+                    price: price,
+                    roomId: roomID,
+                    userId: sessions.user.id as string,
+                    Payment:{
+                        create:{
+                            amount: total,
+
+                        }
+                    }
+                }
+            })
+            reservationid = reservation.id
+            redirect(`/checkout/${reservationid}`)
+
+        })
+    } catch (error) {
+        console.error(error)
+    }
+    
 
 } 
