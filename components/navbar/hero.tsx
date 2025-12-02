@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import SplitText from "../SplitText";
 import DarkVeil from "../DarkVeil";
+import FadeContent from "../Animation/FadeContent";
 
 const Hero = () => {
 
@@ -11,6 +12,7 @@ const Hero = () => {
         console.log('All letters have animated!');
     };
     return (<>
+    <FadeContent blur={true} duration={1500} easing="ease-out" initialOpacity={0}>
         <div className=" relative h-screen text-white overflow-hidden">
             <div className="absolute inset-0">
                 <Image src='/FrontendImage/Hotel-Hero.jpg' alt="Hotel" fill className=" object-cover object-center w-full h-full" loading="lazy"></Image>
@@ -40,6 +42,7 @@ const Hero = () => {
                 </div>
             </div>
         </div>
+    </FadeContent>
     </>)
 }
 

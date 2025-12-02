@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { IoCheckmark, IoPeopleOutline } from "react-icons/io5";
 import ReserveForm from "./ReserveForm";
 import "react-datepicker/dist/react-datepicker.css"
+import Skeleton from "./CardSkeleton";
 
 
 const RoomDetail = async ({ roomID }: { roomID: string }) => {
@@ -50,3 +51,85 @@ const RoomDetail = async ({ roomID }: { roomID: string }) => {
 };
 
 export default RoomDetail;
+
+export function RoomDetailSkeleton() {
+    return (
+        <div className="max-w-screen-xl py-16 px-4 grid lg:grid-cols-12 gap-8 mx-auto">
+            {/* Left Column - Room Details */}
+            <div className="md:col-span-8">
+                {/* Image skeleton */}
+                <Skeleton className="w-full h-[430px] rounded-sm mb-8" />
+                
+                {/* Room name skeleton */}
+                <Skeleton className="h-12 w-3/4 mb-8" />
+                
+                {/* Description skeleton */}
+                <div className="space-y-2 mb-6">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-4/5" />
+                </div>
+                
+                {/* Amenities title */}
+                <Skeleton className="h-6 w-32 mb-2" />
+                
+                {/* Amenities grid */}
+                <div className="grid md:grid-cols-3 gap-2">
+                    {[...Array(6)].map((_, index) => (
+                        <div className="flex gap-1 py-1" key={index}>
+                            <Skeleton className="h-5 w-5 rounded" />
+                            <Skeleton className="h-5 w-24" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
+            {/* Right Column - Reservation Form */}
+            <div className="md:col-span-4">
+                <div className="border-2 border-gray-400 border-dashed px-3 py-5 bg-slate-50 rounded-md">
+                    {/* Capacity & Price section */}
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center space-x-2">
+                            <Skeleton className="h-4 w-4 rounded" />
+                            <Skeleton className="h-4 w-20" />
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="h-8 w-24" />
+                        </div>
+                    </div>
+                    
+                    {/* Reserve Form Skeleton */}
+                    <ReserveFormSkeleton />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export function ReserveFormSkeleton() {
+    return (
+        <div>
+            {/* Date picker field */}
+            <div className="mb-4">
+                <Skeleton className="h-5 w-40 mb-2" />
+                <Skeleton className="h-10 w-full rounded-md" />
+            </div>
+            
+            {/* Name field */}
+            <div className="mb-4">
+                <Skeleton className="h-5 w-24 mb-2" />
+                <Skeleton className="h-10 w-full rounded-md" />
+            </div>
+            
+            {/* Phone field */}
+            <div className="mb-4">
+                <Skeleton className="h-5 w-32 mb-2" />
+                <Skeleton className="h-10 w-full rounded-md" />
+            </div>
+            
+            {/* Submit button */}
+            <Skeleton className="h-12 w-full rounded-sm" />
+        </div>
+    )
+}

@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "./prisma";
+import { tr } from "zod/locales";
 
 export const getAmenities = async () => {
     const session = await auth()
@@ -38,5 +39,33 @@ export const getRoomByID = async (roomID: string) => {
     } catch (error) {
         console.log(error);
         
+    }
+}
+
+export const getReservationById = async (Reservationid: string) => {
+    try {
+        const result = await prisma.reservation.findUnique({
+            where: {id: Reservationid},
+            include: {
+                Room: {
+                    select: {
+                        name: true,
+                        price: true,
+                        image: true,
+                    }
+                },
+                User: {
+                    select: {
+                        name: true,
+                        email:true,
+                        phone: true
+                    }
+                },
+                Payment: true,
+            }
+        })
+        return result 
+    } catch (error) {
+        console.log(error)
     }
 }
