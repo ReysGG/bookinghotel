@@ -14,20 +14,23 @@ const snap = new Midtrans.Snap({
 export const POST = async (request: Request) => {
     const reservation: ReservationType = await request.json()
 
-    const parameter = {
-        transaction_details: {
-            order_id : reservation.id,
-            gross_amount : reservation.Payment?.amount || 0,
-        },
-        credit_card: {
-            secure: true
-        },
-        custumer_details: {
-            first_name: reservation.User.name,
-            email: reservation.User.email,
+    try {
+        const parameter = {
+            transaction_details: {
+                order_id: reservation.id,
+                gross_amount: reservation.Payment?.amount || 0,
+            },
+            credit_card: {
+                secure: true
+            },
+            custumer_details: {
+                first_name: reservation.User.name,
+                email: reservation.User.email,
+            }
         }
+        const token = await snap.createTransactionToken(parameter);
+        return NextResponse.json({ token })
+    } catch (error) {
+        return NextResponse.json({ message: "Sudah dilakukan booking" }, { status: 500 })
     }
-
-    const token = await snap.createTransactionToken(parameter);
-    return NextResponse.json({token})
 }

@@ -2,6 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // async headers(){
+  //   return[
+  //     {
+  //       source: '/api/payment/notification/:path',
+  //       headers: [
+  //         {
+  //           key: "Access-Control-Allow-Origin", value: '*'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   images: {
     remotePatterns: [
       {
