@@ -69,3 +69,61 @@ export const getReservationById = async (Reservationid: string) => {
         console.log(error)
     }
 }
+
+// Get Disable room by ID
+
+export const getDisableRoomByID = async (roomID: string) => {
+    try {
+        const result = await prisma.reservation.findMany({
+            select: {
+                startDate: true,
+                endDate: true,
+            },
+            where: {
+                roomId: roomID,
+                Payment: {status: {not: 'failure'}}
+            }
+        })
+        return result
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const getReservationByUserID = async () => {
+    const session  = await auth()
+    if(!session || !session.user || !session.user.id){
+        throw new Error("Unauthorized")
+    }
+    try {
+        const result = await prisma.reservation.findMany({
+            where: {
+                userId: session.user.id
+            },
+            include: {
+                Room: {
+                    select: {
+                        name: true,
+                        price: true,
+                        image: true,
+                    }
+                },
+                User:{
+                    select:{
+                        name: true,
+                        email: true,
+                        phone: true,
+                    }
+                },
+                Payment: true,
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}

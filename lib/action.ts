@@ -210,7 +210,6 @@ export const createReserve = async (roomID: string, price: number, startDate: Da
                     Payment:{
                         create:{
                             amount: total,
-
                         }
                     }
                 }

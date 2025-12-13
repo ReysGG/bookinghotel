@@ -1,12 +1,12 @@
 "use client"
 import { createReserve } from '@/lib/action';
 import { Room } from '@/lib/generated/prisma';
-import { RoomDetailProps } from '@/types/room';
+import { DisableDate, RoomDetailProps } from '@/types/room';
 import { addDays } from 'date-fns';
 import { useActionState, useState } from 'react';
 import { DatePicker } from 'react-datepicker'
 
-const ReserveForm = ({ room }: { room: RoomDetailProps }) => {
+const ReserveForm = ({ room, disableDate }: { room: RoomDetailProps, disableDate:  DisableDate[]}) => {
     const Startdate = new Date();
     const EndDate = addDays(Startdate, 1) // Menambahkan 1 hari dari tanggal mulai
 
@@ -21,6 +21,13 @@ const ReserveForm = ({ room }: { room: RoomDetailProps }) => {
         console.log('Start : ',start,'End : ', end);
     }
 
+    const exclaudeDate = disableDate.map((item) => {
+        return {
+            start: item.startDate,
+            end: item.endDate
+        }
+    })
+
     const [output, formAction, pending] = useActionState(createReserve.bind(null, room.id, room.price, startDate, endDate), null)
     return (
         <div>
@@ -33,6 +40,7 @@ const ReserveForm = ({ room }: { room: RoomDetailProps }) => {
                         endDate={endDate}
                         minDate={new Date()}
                         onChange={handleDateChange}
+                        excludeDateIntervals={exclaudeDate}
                         selectsRange={true}
                         dateFormat={"dd-MM-YYYY"}
                         wrapperClassName='w-full'

@@ -7,11 +7,12 @@ import { IoCheckmark, IoPeopleOutline } from "react-icons/io5";
 import ReserveForm from "./ReserveForm";
 import "react-datepicker/dist/react-datepicker.css"
 import Skeleton from "./CardSkeleton";
+import { getDisableRoomByID } from "@/lib/data";
 
 
 const RoomDetail = async ({ roomID }: { roomID: string }) => {
-    const room = await getRoomDetails(roomID)
-    if (!room) return notFound()
+    const [room, disableDate] = await Promise.all([getRoomDetails(roomID), getDisableRoomByID(roomID)])
+    if (!room || !disableDate) return notFound()
     return (
         <div className="max-w-screen-xl py-16 px-4 grid lg:grid-cols-12 gap-8 mx-auto">
             <div className="md:col-span-8">
@@ -43,7 +44,7 @@ const RoomDetail = async ({ roomID }: { roomID: string }) => {
                         </div>
                     </div>
                     {/* Reservation room */}
-                    <ReserveForm room={room}></ReserveForm>
+                    <ReserveForm room={room} disableDate={disableDate}></ReserveForm>
                 </div>
             </div>
         </div>
