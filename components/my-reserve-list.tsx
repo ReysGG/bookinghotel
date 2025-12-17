@@ -2,6 +2,7 @@ import { getReservationByUserID } from "@/lib/data";
 import { FormatCurrency, FormatDate } from "@/lib/utils";
 import { differenceInCalendarDays } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const MyReserveList = async () => {
@@ -11,7 +12,10 @@ const MyReserveList = async () => {
   return (
     <div>
       {reservation.map((item) => (
-        <div className="bg-white shadow pb-4 mb-4 md:pb-0 relative">
+        <div
+          className="bg-white shadow pb-4 mb-4 md:pb-0 relative"
+          key={item.id}
+        >
           <div className="flex items-center justify-between bg-gray-100 px-2 py-1 rounded-t-sm">
             <h1 className="text-sm font-medium text-gray-900 truncate">
               Reservation ID: #{item.id}
@@ -31,7 +35,7 @@ const MyReserveList = async () => {
               className="object-cover w-full rounded-t-sm h-60 md:h-auto md:w-1/3 md:rounded-none md:rounded-s-sm"
               alt="image room"
             ></Image>
-            <div className="flex items-center gap-1 mb-3 font-normal text-gray-700">
+            <div className="flex items-center gap-1 px-2 mb-3 font-normal text-gray-700 w-full">
               <div className="w-full ">
                 <div className="flex items-center justify-between text-center font-medium text-gray-900 truncate">
                   <span>Price</span>
@@ -61,9 +65,27 @@ const MyReserveList = async () => {
               </div>
             </div>
           </div>
-          <div className=""></div>
+          <div className="flex items-end justify-end absolute inset-4">
+            {item.Payment?.status === "unpaid" ? (
+              <Link
+                href={`/checkout/${item.id}`}
+                className="px-6 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Pay now
+              </Link>
+            ) : (
+              <Link
+                href={`/myreservation/${item.id}`}
+                className="px-5 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                View detail
+              </Link>
+            )}
+          </div>
         </div>
       ))}
     </div>
   );
 };
+
+export default MyReserveList;

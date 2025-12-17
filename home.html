@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - Zwistel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              destructive: {
+                DEFAULT: "hsl(var(--destructive))",
+                foreground: "hsl(var(--destructive-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+              popover: {
+                DEFAULT: "hsl(var(--popover))",
+                foreground: "hsl(var(--popover-foreground))",
+              },
+              card: {
+                DEFAULT: "hsl(var(--card))",
+                foreground: "hsl(var(--card-foreground))",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      /* Mocking animated classes simply */
+      .fade-in {
+        animation: fadeIn 1.5s ease-out forwards;
+        opacity: 0;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased bg-white text-gray-900">
+    <!-- Navbar -->
+    <div class="fixed top-0 z-20 w-full bg-white shadow-sm">
+      <div
+        class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4"
+      >
+        <a href="/">
+          <img
+            src="/FrontendImage/Logo.png"
+            width="128"
+            height="49"
+            alt="logo"
+            class="block w-32 h-auto"
+          />
+        </a>
+
+        <!-- Mobile Menu Button (No JS attached, just static visualization) -->
+        <button
+          class="inline-flex items-center p-2 justify-center text-sm text-gray-500 rounded-md md:hidden hover:bg-gray-100"
+        >
+          <svg
+            class="size-8 w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+
+        <!-- Nav Links (Desktop) -->
+        <div class="hidden w-full md:block md:w-auto">
+          <ul
+            class="flex flex-col font-semibold text-sm uppercase p-4 mt-4 rounded-sm bg-gray-50 md:flex-row md:items-center md:space-x-10 md:p-0 md:mt-0 md:border-0 md:bg-white"
+          >
+            <li>
+              <a
+                href="/"
+                class="block py-2 px-3 text-gray-800 hover:bg-gray-200 rounded-sm md:hover:bg-transparent md:p-0"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/about"
+                class="block py-2 px-3 text-gray-800 hover:bg-gray-200 rounded-sm md:hover:bg-transparent md:p-0"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="/room"
+                class="block py-2 px-3 text-gray-800 hover:bg-gray-200 rounded-sm md:hover:bg-transparent md:p-0"
+                >Room</a
+              >
+            </li>
+            <li>
+              <a
+                href="/contact"
+                class="block py-2 px-3 text-gray-800 hover:bg-gray-200 rounded-sm md:hover:bg-transparent md:p-0"
+                >Contact</a
+              >
+            </li>
+
+            <!-- Guest State -->
+            <li class="pt-4 md:pt-0">
+              <a
+                href="/signin"
+                class="py-3 px-12 bg-blue-400 text-white hover:bg-blue-600 rounded-sm inline-block"
+                >Sign in</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <!-- Replaces <Hero> -->
+    <div class="relative h-screen text-white overflow-hidden fade-in">
+      <div class="absolute inset-0">
+        <!-- Background Image -->
+        <img
+          src="/FrontendImage/Hotel-Hero.jpg"
+          alt="Hotel"
+          class="object-cover object-center w-full h-full"
+          loading="lazy"
+        />
+        <!-- DarkOverlay replacement -->
+        <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+
+      <div
+        class="relative flex flex-col justify-center items-center h-full text-center px-4"
+      >
+        <!-- Static Text replacement for SplitText -->
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-3">
+          Book Your Luxury Room
+        </h1>
+
+        <p class="text-xl text-gray-200 mb-8">
+          Get Special order just for you today.
+        </p>
+
+        <div class="flex gap-5 flex-wrap justify-center">
+          <a
+            href="/room"
+            class="bg-blue-400 text-white hover:bg-blue-600 py-2.5 px-6 md:px-10 text-lg font-semibold hover:scale-105 hover:shadow-lg transition"
+            >Book now</a
+          >
+          <a
+            href="/room"
+            class="bg-transparent border border-blue-400 text-white hover:bg-blue-600 py-2.5 px-6 md:px-10 text-lg font-semibold hover:scale-105 hover:shadow-lg transition"
+            >Contact Us</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="mt-16">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold uppercase">Room & Rate</h1>
+        <p class="text-gray-500 py-3">
+          Discover our luxurious rooms and exclusive rates
+        </p>
+      </div>
+
+      <!-- Main / Card Grid -->
+      <div class="max-w-screen-xl py-6 pb-20 px-4 mx-auto">
+        <div class="grid gap-7 md:grid-cols-3">
+          <!-- Mock Card 1 -->
+          <div
+            class="bg-white shadow-lg rounded-sm transition hover:shadow-sm hover:bg-gray-100"
+          >
+            <div class="h-[260px] w-auto rounded-t-sm relative overflow-hidden">
+              <img
+                src="/FrontendImage/Hotel-Hero.jpg"
+                alt="Deluxe Room"
+                class="w-full h-full object-cover rounded-t-sm hover:scale-110 transition duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-8">
+              <h4 class="text-2xl font-medium">
+                <a href="#" class="hover:text-gray-800 transition duration-150"
+                  >Deluxe Room</a
+                >
+              </h4>
+              <h4 class="text-2xl mb-7">
+                <span class="font-semibold text-gray-600">Rp 1.500.000</span>
+                <span class="text-gray-400 text-sm">/Night</span>
+              </h4>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-gray-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-2.79-39.49 27.77-72 66-72s68.79 32.56 66 72zM336 304c-65.17 0-127.84 32.37-127.84 32.37v45.18c4.88 23.17 27.24 38.45 50.84 38.45h154c23.6 0 45.96-15.28 50.84-38.45v-45.18S401.17 304 336 304z"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M200 72a96 96 0 00-67 165c-37.93 17.91-95 62.48-95 120.73V419a48.14 48.14 0 0048 48h47v-38.33a88.63 88.63 0 01-16.14-51.17V336.33S116.83 304 182 304h25.93A104.46 104.46 0 01200 274v-30c0-6.19 2-12 4.19-17.71A96.16 96.16 0 00200 72z"
+                    />
+                  </svg>
+                  <span>2 People</span>
+                </div>
+                <a
+                  href="#"
+                  class="px-6 py-2.5 md:px-10 md:py-3 font-semibold text-white bg-blue-600 rounded-sm hover:bg-blue-500 transition duration-150"
+                  >Book Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Mock Card 2 -->
+          <div
+            class="bg-white shadow-lg rounded-sm transition hover:shadow-sm hover:bg-gray-100"
+          >
+            <div class="h-[260px] w-auto rounded-t-sm relative overflow-hidden">
+              <img
+                src="/FrontendImage/Hotel-Hero.jpg"
+                alt="Example Room"
+                class="w-full h-full object-cover rounded-t-sm hover:scale-110 transition duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-8">
+              <h4 class="text-2xl font-medium">
+                <a href="#" class="hover:text-gray-800 transition duration-150"
+                  >Executive Suite</a
+                >
+              </h4>
+              <h4 class="text-2xl mb-7">
+                <span class="font-semibold text-gray-600">Rp 2.800.000</span>
+                <span class="text-gray-400 text-sm">/Night</span>
+              </h4>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-gray-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-2.79-39.49 27.77-72 66-72s68.79 32.56 66 72zM336 304c-65.17 0-127.84 32.37-127.84 32.37v45.18c4.88 23.17 27.24 38.45 50.84 38.45h154c23.6 0 45.96-15.28 50.84-38.45v-45.18S401.17 304 336 304z"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M200 72a96 96 0 00-67 165c-37.93 17.91-95 62.48-95 120.73V419a48.14 48.14 0 0048 48h47v-38.33a88.63 88.63 0 01-16.14-51.17V336.33S116.83 304 182 304h25.93A104.46 104.46 0 01200 274v-30c0-6.19 2-12 4.19-17.71A96.16 96.16 0 00200 72z"
+                    />
+                  </svg>
+                  <span>4 People</span>
+                </div>
+                <a
+                  href="#"
+                  class="px-6 py-2.5 md:px-10 md:py-3 font-semibold text-white bg-blue-600 rounded-sm hover:bg-blue-500 transition duration-150"
+                  >Book Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Mock Card 3 -->
+          <div
+            class="bg-white shadow-lg rounded-sm transition hover:shadow-sm hover:bg-gray-100"
+          >
+            <div class="h-[260px] w-auto rounded-t-sm relative overflow-hidden">
+              <img
+                src="/FrontendImage/Hotel-Hero.jpg"
+                alt="Example Room"
+                class="w-full h-full object-cover rounded-t-sm hover:scale-110 transition duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-8">
+              <h4 class="text-2xl font-medium">
+                <a href="#" class="hover:text-gray-800 transition duration-150"
+                  >Family Room</a
+                >
+              </h4>
+              <h4 class="text-2xl mb-7">
+                <span class="font-semibold text-gray-600">Rp 3.500.000</span>
+                <span class="text-gray-400 text-sm">/Night</span>
+              </h4>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-gray-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-2.79-39.49 27.77-72 66-72s68.79 32.56 66 72zM336 304c-65.17 0-127.84 32.37-127.84 32.37v45.18c4.88 23.17 27.24 38.45 50.84 38.45h154c23.6 0 45.96-15.28 50.84-38.45v-45.18S401.17 304 336 304z"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M200 72a96 96 0 00-67 165c-37.93 17.91-95 62.48-95 120.73V419a48.14 48.14 0 0048 48h47v-38.33a88.63 88.63 0 01-16.14-51.17V336.33S116.83 304 182 304h25.93A104.46 104.46 0 01200 274v-30c0-6.19 2-12 4.19-17.71A96.16 96.16 0 00200 72z"
+                    />
+                  </svg>
+                  <span>5 People</span>
+                </div>
+                <a
+                  href="#"
+                  class="px-6 py-2.5 md:px-10 md:py-3 font-semibold text-white bg-blue-600 rounded-sm hover:bg-blue-500 transition duration-150"
+                  >Book Now</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+      <div class="max-w-screen-xl mx-auto px-3 w-full py-10 md:py-16">
+        <div class="grid md:grid-cols-3 gap-7">
+          <!-- Branding -->
+          <div>
+            <a href="/" class="mb-7 inline-block">
+              <img
+                src="/FrontendImage/Logo.png"
+                width="128"
+                height="49"
+                alt="logo"
+                class="w-32 h-auto"
+              />
+            </a>
+            <p class="text-gray-400">
+              Zwistel is a platform that provides the best services for hotel
+              booking. We are committed to making your travel experience
+              unforgettable.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="flex gap-x-10 md:gap-x-20">
+              <div class="flex-1 md:flex-none">
+                <h4 class="mb-8 text-xl font-semibold text-white">Links</h4>
+                <ul class="space-y-5 text-gray-400">
+                  <li>
+                    <a href="/" class="hover:text-white transition">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about" class="hover:text-white transition"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/room" class="hover:text-white transition"
+                      >Rooms</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/Contact" class="hover:text-white transition"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="flex-1 md:flex-none">
+                <h4 class="mb-8 text-xl font-semibold text-white">Legal</h4>
+                <ul class="space-y-5 text-gray-400">
+                  <li>
+                    <a href="#" class="hover:text-white transition">Legal</a>
+                  </li>
+                  <li>
+                    <a href="#" class="hover:text-white transition"
+                      >Syarat & Ketentuan</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="hover:text-white transition"
+                      >Payment Method</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="hover:text-white transition"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div>
+            <h4 class="mb-8 text-xl font-semibold text-white">Newsletter</h4>
+            <p class="text-gray-400">
+              Subscribe to our newsletter to get the latest news and offers.
+            </p>
+            <form action="" class="mt-5">
+              <div class="mb-5">
+                <input
+                  type="text"
+                  name="email"
+                  class="w-full p-3 rounded-sm bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Example@email.com"
+                />
+              </div>
+              <button
+                class="bg-blue-400 p-3 font-bold text-white w-full text-center rounded-sm hover:bg-blue-600 transition"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-screen-xl mx-auto px-4 border-t border-gray-800 py-8 text-center text-base text-gray-500"
+      >
+        &copy; 2025 Zwistel. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
