@@ -1,4 +1,5 @@
 import DashboardCard from "@/components/admin/DashboardCard";
+import ReservationList from "@/components/admin/ReservationList";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -15,6 +16,7 @@ const DashboardPage = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <DashboardCard />
         </Suspense>
+        <ReservationList></ReservationList>
       </div>
     </>
   );
