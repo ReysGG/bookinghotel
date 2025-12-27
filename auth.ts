@@ -2,25 +2,12 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import { prisma } from "./lib/prisma"
+import authConfig from "./auth.config"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma), //mengembalikkan data user dari database
-  providers: [Google],
   session: { strategy: 'jwt' },
-  pages: {
-    signIn: '/signin',
-  },
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) token.role = user.role // ngasih tau kalau token.role itu dari user.role
-      return token;
-    },
-    session({ session, token }) { // ini jatuhnya client
-      session.user.id = token.sub //(ID pengguna dari database).
-      session.user.role = token.role //(Role pengguna dari database).
-      return session;
-    },
-  }
+  ...authConfig,
 })
 
 // angkah 1: (Otomatis oleh PrismaAdapter)

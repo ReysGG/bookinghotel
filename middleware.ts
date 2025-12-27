@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./auth";
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
+
+const { auth } = NextAuth(authConfig);
 
 const ProtectedRoutes = ["/myreservation", "/checkout", "/admin"]
 
-export async function middleware(request:NextRequest) {
-    const session = await auth()
+export default auth(async function middleware(req) {
+    const session = req.auth
+    const request = req as unknown as NextRequest
     const isLoggedIn = !!session?.user
     const role = session?.user?.role
     const { pathname } = request.nextUrl
@@ -21,7 +25,7 @@ export async function middleware(request:NextRequest) {
         return NextResponse.redirect(new URL("/", request.url))
     }
 
-}
+})
 
 export const config = {
   matcher: [
