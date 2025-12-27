@@ -65,9 +65,7 @@ const EditForm = ({
     updateRoom.bind(null, image, room.id),
     null
   );
-  const checkedAmenities = room.RoomAmenities.map(
-    (item: any) => item.amenitiesId
-  );
+  const checkedAmenities = room.RoomAmenities.map((item) => item.amenitiesId);
 
   return (
     <>
