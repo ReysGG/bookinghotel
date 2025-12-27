@@ -20,23 +20,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.role = token.role //(Role pengguna dari database).
       return session;
     },
-    signIn({ user, account, profile }) {
-      // 1. Cek dulu apakah object 'user' nya ada
-      if (!user) {
-        // Jika tidak ada user, mungkin ini alur error
-        // atau provider lain. Kita tolak saja untuk keamanan.
-        return false
-      }
-
-      // 2. SEKARANG kita aman untuk mengecek 'user.role'
-      if (user.role === 'BANNED') {
-        console.log("Login ditolak: User BANNED");
-        return false // <-- Tolak login karena BANNED
-      }
-
-      // 3. Jika user ada DAN role-nya BUKAN 'BANNED'
-      return true // <-- Izinkan login
-    }
   }
 })
 
