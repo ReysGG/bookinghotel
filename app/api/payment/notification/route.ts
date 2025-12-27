@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "@/lib/generated/prisma";
+
 import { PaymentProps } from "@/types/payment";
 import crypto from 'crypto'
 import { prisma } from "@/lib/prisma";

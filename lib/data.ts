@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { prisma } from "./prisma";
-import { tr } from "zod/locales";
 
 export const getAmenities = async () => {
     const session = await auth()

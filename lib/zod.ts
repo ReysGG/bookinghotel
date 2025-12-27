@@ -1,4 +1,4 @@
-import { array, coerce, number, object, string } from "zod";
+import { array, coerce, object, string } from "zod";
 
 export const RoomSchema = object({
     name: string().min(1),

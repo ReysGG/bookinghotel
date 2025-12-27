@@ -1,6 +1,4 @@
 "use server"
-
-import { error, log } from "console"
 import { ContactFormSchema, ReserveSchema, RoomSchema } from "./zod"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"

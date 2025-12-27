@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import Midtrans from 'midtrans-client';
 import { ReservationType } from "@/types/reservation";
-import { se } from "date-fns/locale";
-import { email } from "zod";
-import { Phone } from "lucide-react";
 
 const snap = new Midtrans.Snap({
     isProduction: false,

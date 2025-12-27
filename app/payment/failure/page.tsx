@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import { HiXCircle } from "react-icons/hi";
 
 export const metadata: Metadata = {
   title: "Payment failure",

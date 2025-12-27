@@ -1,8 +1,9 @@
-
 const CheckoutPage = () => {
-    return <>
-    <div className="py-20 mt-10">Checkout Page</div>
+  return (
+    <>
+      <div className="py-20 mt-10">Checkout Page</div>
     </>
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

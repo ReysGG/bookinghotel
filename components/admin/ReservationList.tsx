@@ -1,5 +1,5 @@
 import Skeleton from "@/components/CardSkeleton";
-import { getReservations, getRoom } from "@/lib/data";
+import { getReservations } from "@/lib/data";
 import { FormatCurrency, FormatDate } from "@/lib/utils";
 import Image from "next/image";
 
